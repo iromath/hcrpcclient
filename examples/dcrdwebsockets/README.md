@@ -28,7 +28,7 @@ password for the RPC server:
 Finally, navigate to the example's directory and run it with:
 
 ```bash
-$ cd $GOPATH/src/github.com/HcashOrg/hcrpcclient/examples/dcrdwebsockets
+$ cd $GOPATH/src/github.com/HcashOrg/hcrpcclient/examples/hcdwebsockets
 $ go run *.go
 ```
 

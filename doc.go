@@ -16,13 +16,13 @@ style Hcd JSON-RPC API.  This client has been tested with hcd
 (https://github.com/HcashOrg/hcwallet).
 
 In addition to the compatible standard HTTP POST JSON-RPC API, hcd and
-dcrwallet provide a websocket interface that is more efficient than the standard
+hcwallet provide a websocket interface that is more efficient than the standard
 HTTP POST method of accessing RPC.  The section below discusses the differences
 between HTTP POST and websockets.
 
 By default, this client assumes the RPC server supports websockets and has
 TLS enabled.  In practice, this currently means it assumes you are talking to
-hcd or dcrwallet by default.  However, configuration options are provided to
+hcd or hcwallet by default.  However, configuration options are provided to
 fall back to HTTP POST and disable TLS to support talking with inferior bitcoin
 core style RPC servers.
 
@@ -34,7 +34,7 @@ quite a bit of overhead to every call and lacks flexibility for features such as
 notifications.
 
 In contrast, the websocket-based JSON-RPC interface provided by hcd and
-dcrwallet only uses a single connection that remains open and allows
+hcwallet only uses a single connection that remains open and allows
 asynchronous bi-directional communication.
 
 The websocket interface supports all of the same commands as HTTP POST, but they
@@ -106,16 +106,16 @@ Minor RPC Server Differences and Chain/Wallet Separation
 
 Some of the commands are extensions specific to a particular RPC server.  For
 example, the DebugLevel call is an extension only provided by hcd (and
-dcrwallet passthrough).  Therefore if you call one of these commands against
+hcwallet passthrough).  Therefore if you call one of these commands against
 an RPC server that doesn't provide them, you will get an unimplemented error
 from the server.  An effort has been made to call out which commmands are
 extensions in their documentation.
 
 Also, it is important to realize that hcd intentionally separates the wallet
-functionality into a separate process named dcrwallet.  This means if you are
+functionality into a separate process named hcwallet.  This means if you are
 connected to the hcd RPC server directly, only the RPCs which are related to
 chain services will be available.  Depending on your application, you might only
-need chain-related RPCs.  In contrast, dcrwallet provides pass through treatment
+need chain-related RPCs.  In contrast, hcwallet provides pass through treatment
 for chain-related RPCs, so it supports them in addition to wallet-related RPCs.
 
 Errors
@@ -165,12 +165,12 @@ Example Usage
 
 The following full-blown client examples are in the examples directory:
 
- - dcrdwebsockets
+ - hcdwebsockets
    Connects to a hcd RPC server using TLS-secured websockets, registers for
    block connected and block disconnected notifications, and gets the current
    block count
- - dcrwalletwebsockets
-   Connects to a dcrwallet RPC server using TLS-secured websockets, registers
+ - hcwalletwebsockets
+   Connects to a hcwallet RPC server using TLS-secured websockets, registers
    for notifications about changes to account balances, and gets a list of
    unspent transaction outputs (utxos) the wallet can sign
 */

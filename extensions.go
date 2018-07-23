@@ -40,20 +40,20 @@ func (r FutureCreateEncryptedWalletResult) Receive() error {
 //
 // See CreateEncryptedWallet for the blocking version and more details.
 //
-// NOTE: This is a dcrwallet extension.
+// NOTE: This is a hcwallet extension.
 func (c *Client) CreateEncryptedWalletAsync(passphrase string) FutureCreateEncryptedWalletResult {
 	cmd := dcrjson.NewCreateEncryptedWalletCmd(passphrase)
 	return c.sendCmd(cmd)
 }
 
 // CreateEncryptedWallet requests the creation of an encrypted wallet.  Wallets
-// managed by dcrwallet are only written to disk with encrypted private keys,
+// managed by hcwallet are only written to disk with encrypted private keys,
 // and generating wallets on the fly is impossible as it requires user input for
 // the encryption passphrase.  This RPC specifies the passphrase and instructs
 // the wallet creation.  This may error if a wallet is already opened, or the
 // new wallet cannot be written to disk.
 //
-// NOTE: This is a dcrwallet extension.
+// NOTE: This is a hcwallet extension.
 func (c *Client) CreateEncryptedWallet(passphrase string) error {
 	return c.CreateEncryptedWalletAsync(passphrase).Receive()
 }
@@ -498,7 +498,7 @@ func (r FutureExportWatchingWalletResult) Receive() ([]byte, []byte, error) {
 //
 // See ExportWatchingWallet for the blocking version and more details.
 //
-// NOTE: This is a dcrwallet extension.
+// NOTE: This is a hcwallet extension.
 func (c *Client) ExportWatchingWalletAsync(account string) FutureExportWatchingWalletResult {
 	cmd := dcrjson.NewExportWatchingWalletCmd(&account, dcrjson.Bool(true))
 	return c.sendCmd(cmd)
@@ -506,10 +506,10 @@ func (c *Client) ExportWatchingWalletAsync(account string) FutureExportWatchingW
 
 // ExportWatchingWallet returns the raw bytes for a watching-only version of
 // wallet.bin and tx.bin, respectively, for the specified account that can be
-// used by dcrwallet to enable a wallet which does not have the private keys
+// used by hcwallet to enable a wallet which does not have the private keys
 // necessary to spend funds.
 //
-// NOTE: This is a dcrwallet extension.
+// NOTE: This is a hcwallet extension.
 func (c *Client) ExportWatchingWallet(account string) ([]byte, []byte, error) {
 	return c.ExportWatchingWalletAsync(account).Receive()
 }
@@ -899,7 +899,7 @@ func (c *Client) ListAddressTransactionsAsync(addresses []hcutil.Address, accoun
 // ListAddressTransactions returns information about all transactions associated
 // with the provided addresses.
 //
-// NOTE: This is a dcrwallet extension.
+// NOTE: This is a hcwallet extension.
 func (c *Client) ListAddressTransactions(addresses []hcutil.Address, account string) ([]dcrjson.ListTransactionsResult, error) {
 	return c.ListAddressTransactionsAsync(addresses, account).Receive()
 }
@@ -1026,7 +1026,7 @@ func (r FutureSessionResult) Receive() (*dcrjson.SessionResult, error) {
 //
 // See Session for the blocking version and more details.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) SessionAsync() FutureSessionResult {
 	// Not supported in HTTP POST mode.
 	if c.config.HTTPPostMode {
@@ -1041,7 +1041,7 @@ func (c *Client) SessionAsync() FutureSessionResult {
 //
 // This RPC requires the client to be running in websocket mode.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) Session() (*dcrjson.SessionResult, error) {
 	return c.SessionAsync().Receive()
 }
@@ -1074,7 +1074,7 @@ func (r FutureTicketFeeInfoResult) Receive() (*dcrjson.TicketFeeInfoResult, erro
 //
 // See TicketFeeInfo for the blocking version and more details.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TicketFeeInfoAsync(blocks *uint32, windows *uint32) FutureTicketFeeInfoResult {
 	// Not supported in HTTP POST mode.
 	if c.config.HTTPPostMode {
@@ -1098,7 +1098,7 @@ func (c *Client) TicketFeeInfoAsync(blocks *uint32, windows *uint32) FutureTicke
 //
 // This RPC requires the client to be running in websocket mode.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TicketFeeInfo(blocks *uint32, windows *uint32) (*dcrjson.TicketFeeInfoResult, error) {
 	return c.TicketFeeInfoAsync(blocks, windows).Receive()
 }
@@ -1136,7 +1136,7 @@ func (r FutureTicketVWAPResult) Receive() (hcutil.Amount, error) {
 //
 // See TicketVWAP for the blocking version and more details.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TicketVWAPAsync(start *uint32, end *uint32) FutureTicketVWAPResult {
 	// Not supported in HTTP POST mode.
 	if c.config.HTTPPostMode {
@@ -1151,7 +1151,7 @@ func (c *Client) TicketVWAPAsync(start *uint32, end *uint32) FutureTicketVWAPRes
 //
 // This RPC requires the client to be running in websocket mode.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TicketVWAP(start *uint32, end *uint32) (hcutil.Amount, error) {
 	return c.TicketVWAPAsync(start, end).Receive()
 }
@@ -1184,7 +1184,7 @@ func (r FutureTxFeeInfoResult) Receive() (*dcrjson.TxFeeInfoResult, error) {
 //
 // See TxFeeInfo for the blocking version and more details.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TxFeeInfoAsync(blocks *uint32, start *uint32, end *uint32) FutureTxFeeInfoResult {
 	// Not supported in HTTP POST mode.
 	if c.config.HTTPPostMode {
@@ -1199,7 +1199,7 @@ func (c *Client) TxFeeInfoAsync(blocks *uint32, start *uint32, end *uint32) Futu
 //
 // This RPC requires the client to be running in websocket mode.
 //
-// NOTE: This is a decred extension.
+// NOTE: This is a hcd extension.
 func (c *Client) TxFeeInfo(blocks *uint32, start *uint32, end *uint32) (*dcrjson.TxFeeInfoResult, error) {
 	return c.TxFeeInfoAsync(blocks, start, end).Receive()
 }

@@ -721,7 +721,7 @@ func (c *Client) SendManyComment(fromAccount string,
 		comment).Receive()
 }
 
-// Begin DECRED FUNCTIONS ---------------------------------------------------------
+// Begin hcd FUNCTIONS ---------------------------------------------------------
 //
 // SStx generation RPC call handling
 
@@ -1180,7 +1180,7 @@ func (c *Client) SendToSSRtxComment(fromAccount string,
 	return c.SendToSSRtxCommentAsync(fromAccount, tickethash, comment).Receive()
 }
 
-// END DECRED FUNCTIONS -----------------------------------------------------------
+// END hcd FUNCTIONS -----------------------------------------------------------
 
 // *************************
 // Address/Account Functions
@@ -1587,7 +1587,7 @@ func (c *Client) RenameAccount(oldAccount, newAccount string) error {
 type FutureValidateAddressResult chan *response
 
 // Receive waits for the response promised by the future and returns information
-// about the given decred address.
+// about the given hcd address.
 func (r FutureValidateAddressResult) Receive() (*dcrjson.ValidateAddressWalletResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
@@ -1615,7 +1615,7 @@ func (c *Client) ValidateAddressAsync(address hcutil.Address) FutureValidateAddr
 	return c.sendCmd(cmd)
 }
 
-// ValidateAddress returns information about the given decred address.
+// ValidateAddress returns information about the given hcd address.
 func (c *Client) ValidateAddress(address hcutil.Address) (*dcrjson.ValidateAddressWalletResult, error) {
 	return c.ValidateAddressAsync(address).Receive()
 }
@@ -3235,12 +3235,12 @@ func (c *Client) WalletInfo() (*dcrjson.WalletInfoResult, error) {
 }
 
 // TODO(davec): Implement
-// backupwallet (NYI in dcrwallet)
-// encryptwallet (Won't be supported by dcrwallet since it's always encrypted)
-// getwalletinfo (NYI in dcrwallet or dcrjson)
-// listaddressgroupings (NYI in dcrwallet)
-// listreceivedbyaccount (NYI in dcrwallet)
+// backupwallet (NYI in hcwallet)
+// encryptwallet (Won't be supported by hcwallet since it's always encrypted)
+// getwalletinfo (NYI in hcwallet or dcrjson)
+// listaddressgroupings (NYI in hcwallet)
+// listreceivedbyaccount (NYI in hcwallet)
 
 // DUMP
-// importwallet (NYI in dcrwallet)
-// dumpwallet (NYI in dcrwallet)
+// importwallet (NYI in hcwallet)
+// dumpwallet (NYI in hcwallet)

@@ -454,7 +454,7 @@ func (c *Client) SubmitBlockAsync(block *hcutil.Block, options *dcrjson.SubmitBl
 	return c.sendCmd(cmd)
 }
 
-// SubmitBlock attempts to submit a new block into the decred network.
+// SubmitBlock attempts to submit a new block into the hcd network.
 func (c *Client) SubmitBlock(block *hcutil.Block, options *dcrjson.SubmitBlockOptions) error {
 	return c.SubmitBlockAsync(block, options).Receive()
 }

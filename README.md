@@ -15,11 +15,11 @@ There are still several RPCs left to implement and the API is not stable yet.
 
 ## Documentation
 
-* [hcd Websockets Example](https://github.com/HcashOrg/hcrpcclient/blob/master/examples/dcrdwebsockets)  
+* [hcd Websockets Example](https://github.com/HcashOrg/hcrpcclient/blob/master/examples/hcwebsockets)  
   Connects to a hcd RPC server using TLS-secured websockets, registers for
   block connected and block disconnected notifications, and gets the current
   block count
-* [hcwallet Websockets Example](https://github.com/HcashOrg/hcrpcclient/blob/master/examples/dcrwalletwebsockets)  
+* [hcwallet Websockets Example](https://github.com/HcashOrg/hcrpcclient/blob/master/examples/hcwalletwebsockets)  
   Connects to a hcwallet RPC server using TLS-secured websockets, registers for
   notifications about changes to account balances, and gets a list of unspent
   transaction outputs (utxos) the wallet can sign

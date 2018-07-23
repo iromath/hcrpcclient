@@ -29,7 +29,7 @@ func main() {
 		},
 	}
 
-	// Connect to local dcrwallet RPC server using websockets.
+	// Connect to local hcwallet RPC server using websockets.
 	certHomeDir := hcutil.AppDataDir("hcwallet", false)
 	certs, err := ioutil.ReadFile(filepath.Join(certHomeDir, "rpc.cert"))
 	if err != nil {

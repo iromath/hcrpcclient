@@ -1,7 +1,7 @@
-dcrwallet Websockets Example
+hcwallet Websockets Example
 ============================
 
-This example shows how to use the hcrpcclient package to connect to a dcrwallet
+This example shows how to use the hcrpcclient package to connect to a hcwallet
 RPC server using TLS-secured websockets, register for notifications about
 changes to account balances, and get a list of unspent transaction outputs
 (utxos) the wallet can sign.
@@ -29,7 +29,7 @@ password for the RPC server:
 Finally, navigate to the example's directory and run it with:
 
 ```bash
-$ cd $GOPATH/src/github.com/decred/dcrpcclient/examples/dcrwalletwebsockets
+$ cd $GOPATH/src/github.com/decred/hcpcclient/examples/hcwalletwebsockets
 $ go run *.go
 ```
 

@@ -14,7 +14,7 @@ import (
 	"github.com/HcashOrg/hcd/chaincfg/chainhash"
 	"github.com/HcashOrg/hcd/dcrjson"
 	"github.com/HcashOrg/hcd/wire"
-	"github.com/HcashOrg/hcutil"
+	"github.com/HcashOrg/hcd/hcutil"
 )
 
 // FutureGetBestBlockHashResult is a future promise to deliver the result of a

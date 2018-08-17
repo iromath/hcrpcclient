@@ -12,8 +12,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/HcashOrg/hcd/hcutil"
 	hcrpcclient "github.com/HcashOrg/hcrpcclient"
-	"github.com/HcashOrg/hcutil"
 )
 
 func main() {
@@ -37,10 +37,10 @@ func main() {
 		log.Fatal(err)
 	}
 	connCfg := &hcrpcclient.ConnConfig{
-		Host:         "localhost:14009",
+		Host:         "localhost:14009", //"localhost:12009", testnet
 		Endpoint:     "ws",
-		User:         "yourrpcuser",
-		Pass:         "yourrpcpass",
+		User:         "admin", //"yourrpcuser",
+		Pass:         "123",   //"yourrpcpass",
 		Certificates: certs,
 	}
 	client, err := hcrpcclient.New(connCfg, &ntfnHandlers)
@@ -60,6 +60,12 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("Block count: %d", blockCount)
+
+	fDifficulty, err := client.GetDifficulty()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("fDifficulty : %f", fDifficulty)
 
 	// For this example gracefully shutdown the client after 10 seconds.
 	// Ordinarily when to shutdown the client is highly application

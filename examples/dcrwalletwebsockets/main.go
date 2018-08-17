@@ -12,9 +12,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
+	"github.com/HcashOrg/hcd/hcutil"
 	hcrpcclient "github.com/HcashOrg/hcrpcclient"
-	"github.com/HcashOrg/hcutil"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
@@ -36,10 +36,10 @@ func main() {
 		log.Fatal(err)
 	}
 	connCfg := &hcrpcclient.ConnConfig{
-		Host:         "localhost:14010",
+		Host:         "localhost:14010", //testnet "localhost:12010",
 		Endpoint:     "ws",
-		User:         "yourrpcuser",
-		Pass:         "yourrpcpass",
+		User:         "admin", //"yourrpcuser",
+		Pass:         "123",   //"yourrpcpass",
 		Certificates: certs,
 	}
 	client, err := hcrpcclient.New(connCfg, &ntfnHandlers)

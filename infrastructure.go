@@ -25,7 +25,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/HcashOrg/hcd/dcrjson"
+	"github.com/HcashOrg/hcd/hcjson"
 
 	"github.com/btcsuite/go-socks/socks"
 	"github.com/btcsuite/websocket"
@@ -241,22 +241,22 @@ func (c *Client) trackRegisteredNtfns(cmd interface{}) {
 	defer c.ntfnStateLock.Unlock()
 
 	switch bcmd := cmd.(type) {
-	case *dcrjson.NotifyWinningTicketsCmd:
+	case *hcjson.NotifyWinningTicketsCmd:
 		c.ntfnState.notifyWinningTickets = true
 
-	case *dcrjson.NotifySpentAndMissedTicketsCmd:
+	case *hcjson.NotifySpentAndMissedTicketsCmd:
 		c.ntfnState.notifySpentAndMissedTickets = true
 
-	case *dcrjson.NotifyNewTicketsCmd:
+	case *hcjson.NotifyNewTicketsCmd:
 		c.ntfnState.notifyNewTickets = true
 
-	case *dcrjson.NotifyStakeDifficultyCmd:
+	case *hcjson.NotifyStakeDifficultyCmd:
 		c.ntfnState.notifyStakeDifficulty = true
 
-	case *dcrjson.NotifyBlocksCmd:
+	case *hcjson.NotifyBlocksCmd:
 		c.ntfnState.notifyBlocks = true
 
-	case *dcrjson.NotifyNewTransactionsCmd:
+	case *hcjson.NotifyNewTransactionsCmd:
 		if bcmd.Verbose != nil && *bcmd.Verbose {
 			c.ntfnState.notifyNewTxVerbose = true
 		} else {
@@ -287,7 +287,7 @@ type (
 	// to be valid (according to JSON-RPC 1.0 spec), ID may not be nil.
 	rawResponse struct {
 		Result json.RawMessage   `json:"result"`
-		Error  *dcrjson.RPCError `json:"error"`
+		Error  *hcjson.RPCError `json:"error"`
 	}
 )
 
@@ -299,7 +299,7 @@ type response struct {
 }
 
 // result checks whether the unmarshaled response contains a non-nil error,
-// returning an unmarshaled dcrjson.RPCError (or an unmarshaling error) if so.
+// returning an unmarshaled hcjson.RPCError (or an unmarshaling error) if so.
 // If the response is not an error, the raw bytes of the request are
 // returned for further unmashaling into specific result types.
 func (r rawResponse) result() (result []byte, err error) {
@@ -874,14 +874,14 @@ func (c *Client) sendRequest(jReq *jsonRequest) {
 // configuration of the client.
 func (c *Client) sendCmd(cmd interface{}) chan *response {
 	// Get the method associated with the command.
-	method, err := dcrjson.CmdMethod(cmd)
+	method, err := hcjson.CmdMethod(cmd)
 	if err != nil {
 		return newFutureError(err)
 	}
 
 	// Marshal the command.
 	id := c.NextID()
-	marshalledJSON, err := dcrjson.MarshalCmd(id, cmd)
+	marshalledJSON, err := hcjson.MarshalCmd(id, cmd)
 	if err != nil {
 		return newFutureError(err)
 	}

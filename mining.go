@@ -12,7 +12,7 @@ import (
 	"errors"
 
 	"github.com/HcashOrg/hcd/chaincfg/chainhash"
-	"github.com/HcashOrg/hcd/dcrjson"
+	"github.com/HcashOrg/hcd/hcjson"
 	"github.com/HcashOrg/hcd/hcutil"
 )
 
@@ -54,7 +54,7 @@ func (r FutureGenerateResult) Receive() ([]*chainhash.Hash, error) {
 //
 // See Generate for the blocking version and more details.
 func (c *Client) GenerateAsync(numBlocks uint32) FutureGenerateResult {
-	cmd := dcrjson.NewGenerateCmd(numBlocks)
+	cmd := hcjson.NewGenerateCmd(numBlocks)
 	return c.sendCmd(cmd)
 }
 
@@ -91,7 +91,7 @@ func (r FutureGetGenerateResult) Receive() (bool, error) {
 //
 // See GetGenerate for the blocking version and more details.
 func (c *Client) GetGenerateAsync() FutureGetGenerateResult {
-	cmd := dcrjson.NewGetGenerateCmd()
+	cmd := hcjson.NewGetGenerateCmd()
 	return c.sendCmd(cmd)
 }
 
@@ -121,7 +121,7 @@ func (r FutureSetGenerateResult) Receive() error {
 //
 // See SetGenerate for the blocking version and more details.
 func (c *Client) SetGenerateAsync(enable bool, numCPUs int) FutureSetGenerateResult {
-	cmd := dcrjson.NewSetGenerateCmd(enable, &numCPUs)
+	cmd := hcjson.NewSetGenerateCmd(enable, &numCPUs)
 	return c.sendCmd(cmd)
 }
 
@@ -159,7 +159,7 @@ func (r FutureGetHashesPerSecResult) Receive() (int64, error) {
 //
 // See GetHashesPerSec for the blocking version and more details.
 func (c *Client) GetHashesPerSecAsync() FutureGetHashesPerSecResult {
-	cmd := dcrjson.NewGetHashesPerSecCmd()
+	cmd := hcjson.NewGetHashesPerSecCmd()
 	return c.sendCmd(cmd)
 }
 
@@ -176,14 +176,14 @@ type FutureGetMiningInfoResult chan *response
 
 // Receive waits for the response promised by the future and returns the mining
 // information.
-func (r FutureGetMiningInfoResult) Receive() (*dcrjson.GetMiningInfoResult, error) {
+func (r FutureGetMiningInfoResult) Receive() (*hcjson.GetMiningInfoResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result as a getmininginfo result object.
-	var infoResult dcrjson.GetMiningInfoResult
+	var infoResult hcjson.GetMiningInfoResult
 	err = json.Unmarshal(res, &infoResult)
 	if err != nil {
 		return nil, err
@@ -198,12 +198,12 @@ func (r FutureGetMiningInfoResult) Receive() (*dcrjson.GetMiningInfoResult, erro
 //
 // See GetMiningInfo for the blocking version and more details.
 func (c *Client) GetMiningInfoAsync() FutureGetMiningInfoResult {
-	cmd := dcrjson.NewGetMiningInfoCmd()
+	cmd := hcjson.NewGetMiningInfoCmd()
 	return c.sendCmd(cmd)
 }
 
 // GetMiningInfo returns mining information.
-func (c *Client) GetMiningInfo() (*dcrjson.GetMiningInfoResult, error) {
+func (c *Client) GetMiningInfo() (*hcjson.GetMiningInfoResult, error) {
 	return c.GetMiningInfoAsync().Receive()
 }
 
@@ -236,7 +236,7 @@ func (r FutureGetNetworkHashPS) Receive() (int64, error) {
 //
 // See GetNetworkHashPS for the blocking version and more details.
 func (c *Client) GetNetworkHashPSAsync() FutureGetNetworkHashPS {
-	cmd := dcrjson.NewGetNetworkHashPSCmd(nil, nil)
+	cmd := hcjson.NewGetNetworkHashPSCmd(nil, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -255,7 +255,7 @@ func (c *Client) GetNetworkHashPS() (int64, error) {
 //
 // See GetNetworkHashPS2 for the blocking version and more details.
 func (c *Client) GetNetworkHashPS2Async(blocks int) FutureGetNetworkHashPS {
-	cmd := dcrjson.NewGetNetworkHashPSCmd(&blocks, nil)
+	cmd := hcjson.NewGetNetworkHashPSCmd(&blocks, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -276,7 +276,7 @@ func (c *Client) GetNetworkHashPS2(blocks int) (int64, error) {
 //
 // See GetNetworkHashPS3 for the blocking version and more details.
 func (c *Client) GetNetworkHashPS3Async(blocks, height int) FutureGetNetworkHashPS {
-	cmd := dcrjson.NewGetNetworkHashPSCmd(&blocks, &height)
+	cmd := hcjson.NewGetNetworkHashPSCmd(&blocks, &height)
 	return c.sendCmd(cmd)
 }
 
@@ -296,14 +296,14 @@ type FutureGetWork chan *response
 
 // Receive waits for the response promised by the future and returns the hash
 // data to work on.
-func (r FutureGetWork) Receive() (*dcrjson.GetWorkResult, error) {
+func (r FutureGetWork) Receive() (*hcjson.GetWorkResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result as a getwork result object.
-	var result dcrjson.GetWorkResult
+	var result hcjson.GetWorkResult
 	err = json.Unmarshal(res, &result)
 	if err != nil {
 		return nil, err
@@ -318,14 +318,14 @@ func (r FutureGetWork) Receive() (*dcrjson.GetWorkResult, error) {
 //
 // See GetWork for the blocking version and more details.
 func (c *Client) GetWorkAsync() FutureGetWork {
-	cmd := dcrjson.NewGetWorkCmd(nil)
+	cmd := hcjson.NewGetWorkCmd(nil)
 	return c.sendCmd(cmd)
 }
 
 // GetWork returns hash data to work on.
 //
 // See GetWorkSubmit to submit the found solution.
-func (c *Client) GetWork() (*dcrjson.GetWorkResult, error) {
+func (c *Client) GetWork() (*hcjson.GetWorkResult, error) {
 	return c.GetWorkAsync().Receive()
 }
 
@@ -357,7 +357,7 @@ func (r FutureGetWorkSubmit) Receive() (bool, error) {
 //
 // See GetWorkSubmit for the blocking version and more details.
 func (c *Client) GetWorkSubmitAsync(data string) FutureGetWorkSubmit {
-	cmd := dcrjson.NewGetWorkCmd(&data)
+	cmd := hcjson.NewGetWorkCmd(&data)
 	return c.sendCmd(cmd)
 }
 
@@ -375,14 +375,14 @@ type FutureGetBlockTemplate chan *response
 
 // Receive waits for the response promised by the future and returns an error if
 // any occured while generating the block template.
-func (r FutureGetBlockTemplate) Receive() (*dcrjson.GetBlockTemplateResult, error) {
+func (r FutureGetBlockTemplate) Receive() (*hcjson.GetBlockTemplateResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result.
-	var gbt dcrjson.GetBlockTemplateResult
+	var gbt hcjson.GetBlockTemplateResult
 	err = json.Unmarshal(res, &gbt)
 	if err != nil {
 		return nil, err
@@ -396,15 +396,15 @@ func (r FutureGetBlockTemplate) Receive() (*dcrjson.GetBlockTemplateResult, erro
 // on the returned instance.
 //
 // See GetBlockTemplate for the blocking version and more details.
-func (c *Client) GetBlockTemplateAsync(req *dcrjson.TemplateRequest) FutureGetBlockTemplate {
-	cmd := dcrjson.NewGetBlockTemplateCmd(req)
+func (c *Client) GetBlockTemplateAsync(req *hcjson.TemplateRequest) FutureGetBlockTemplate {
+	cmd := hcjson.NewGetBlockTemplateCmd(req)
 	return c.sendCmd(cmd)
 }
 
 // GetBlockTemplate returns a block template to work on.
 //
 // See SubmitBlock to submit the found solution.
-func (c *Client) GetBlockTemplate(req *dcrjson.TemplateRequest) (*dcrjson.GetBlockTemplateResult, error) {
+func (c *Client) GetBlockTemplate(req *hcjson.TemplateRequest) (*hcjson.GetBlockTemplateResult, error) {
 	return c.GetBlockTemplateAsync(req).Receive()
 }
 
@@ -439,7 +439,7 @@ func (r FutureSubmitBlockResult) Receive() error {
 // returned instance.
 //
 // See SubmitBlock for the blocking version and more details.
-func (c *Client) SubmitBlockAsync(block *hcutil.Block, options *dcrjson.SubmitBlockOptions) FutureSubmitBlockResult {
+func (c *Client) SubmitBlockAsync(block *hcutil.Block, options *hcjson.SubmitBlockOptions) FutureSubmitBlockResult {
 	blockHex := ""
 	if block != nil {
 		blockBytes, err := block.Bytes()
@@ -450,11 +450,11 @@ func (c *Client) SubmitBlockAsync(block *hcutil.Block, options *dcrjson.SubmitBl
 		blockHex = hex.EncodeToString(blockBytes)
 	}
 
-	cmd := dcrjson.NewSubmitBlockCmd(blockHex, options)
+	cmd := hcjson.NewSubmitBlockCmd(blockHex, options)
 	return c.sendCmd(cmd)
 }
 
 // SubmitBlock attempts to submit a new block into the hcd network.
-func (c *Client) SubmitBlock(block *hcutil.Block, options *dcrjson.SubmitBlockOptions) error {
+func (c *Client) SubmitBlock(block *hcutil.Block, options *hcjson.SubmitBlockOptions) error {
 	return c.SubmitBlockAsync(block, options).Receive()
 }

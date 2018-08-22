@@ -31,8 +31,8 @@ func main() {
 	}
 
 	// Connect to local hcd RPC server using websockets.
-	dcrdHomeDir := hcutil.AppDataDir("hcd", false)
-	certs, err := ioutil.ReadFile(filepath.Join(dcrdHomeDir, "rpc.cert"))
+	hcdHomeDir := hcutil.AppDataDir("hcd", false)
+	certs, err := ioutil.ReadFile(filepath.Join(hcdHomeDir, "rpc.cert"))
 	if err != nil {
 		log.Fatal(err)
 	}

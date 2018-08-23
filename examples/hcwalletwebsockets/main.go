@@ -36,7 +36,7 @@ func main() {
 		log.Fatal(err)
 	}
 	connCfg := &hcrpcclient.ConnConfig{
-		Host:         "localhost:14010", //testnet "localhost:12010",
+		Host:         "localhost:12010", //testnet "localhost:12010",
 		Endpoint:     "ws",
 		User:         "admin", //"yourrpcuser",
 		Pass:         "123",   //"yourrpcpass",
@@ -58,6 +58,19 @@ func main() {
 		log.Printf("First utxo:\n%v", spew.Sdump(unspent[0]))
 	}
 
+	mp := make(map[hcutil.Address]hcutil.Amount)
+	addr1,_ := hcutil.DecodeAddress("TsRj7wFGcFrpWhWztm4kdG5g1WZWonoFtXm")
+	mp[addr1] = hcutil.Amount(200000000)//2 HCD
+
+
+	mp[addr1] = hcutil.Amount(200000000)//2 HCD
+	hash, err := client.SendManyV2("default",mp)
+	log.Println("hash:",hash,err)
+
+	hash, err = client.SendManyV2ChangeAddr("default",mp,"TbMpHSpnkw2CVi6cbTLcMYydeGn3LnoZG8q")
+	log.Println("hash:",hash,err)
+
+	
 	// For this example gracefully shutdown the client after 10 seconds.
 	// Ordinarily when to shutdown the client is highly application
 	// specific.

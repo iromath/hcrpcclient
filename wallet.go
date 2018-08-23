@@ -721,6 +721,99 @@ func (c *Client) SendManyComment(fromAccount string,
 		comment).Receive()
 }
 
+// SendManyAsync returns an instance of a type that can be used to get the
+// result of the RPC at some future time by invoking the Receive function on the
+// returned instance.
+//
+// See SendMany for the blocking version and more details.
+func (c *Client) SendManyV2Async(fromAccount string, amounts map[hcutil.Address]hcutil.Amount) FutureSendManyResult {
+	convertedAmounts := make(map[string]float64, len(amounts))
+	for addr, amount := range amounts {
+		convertedAmounts[addr.EncodeAddress()] = amount.ToCoin()
+	}
+	cmd := hcjson.NewSendManyV2Cmd(fromAccount, convertedAmounts, nil, nil)
+	return c.sendCmd(cmd)
+}
+
+// SendMany sends multiple amounts to multiple addresses using the provided
+// account as a source of funds in a single transaction.  Only funds with the
+// default number of minimum confirmations will be used.
+//
+// See SendManyMinConf and SendManyComment for different options.
+//
+// NOTE: This function requires to the wallet to be unlocked.  See the
+// WalletPassphrase function for more details.
+func (c *Client) SendManyV2(fromAccount string, amounts map[hcutil.Address]hcutil.Amount) (*chainhash.Hash, error) {
+	return c.SendManyV2Async(fromAccount, amounts).Receive()
+}
+
+// SendManyCommentAsync returns an instance of a type that can be used to get
+// the result of the RPC at some future time by invoking the Receive function on
+// the returned instance.
+//
+// See SendManyComment for the blocking version and more details.
+func (c *Client) SendManyV2ChangeAddrAsync(fromAccount string,
+	amounts map[hcutil.Address]hcutil.Amount, changeAddr string) FutureSendManyResult {
+
+	convertedAmounts := make(map[string]float64, len(amounts))
+	for addr, amount := range amounts {
+		convertedAmounts[addr.EncodeAddress()] = amount.ToCoin()
+	}
+	cmd := hcjson.NewSendManyV2Cmd(fromAccount, convertedAmounts,
+		&changeAddr, nil)
+	return c.sendCmd(cmd)
+}
+
+// SendManyComment sends multiple amounts to multiple addresses using the
+// provided account as a source of funds in a single transaction and stores the
+// provided comment in the wallet.  The comment parameter is intended to be used
+// for the purpose of the transaction   Only funds with the passed number of
+// minimum confirmations will be used.
+//
+// See SendMany and SendManyMinConf to use defaults.
+//
+// NOTE: This function requires to the wallet to be unlocked.  See the
+// WalletPassphrase function for more details.
+func (c *Client) SendManyV2ChangeAddr(fromAccount string,
+	amounts map[hcutil.Address]hcutil.Amount, changeAddr string) (*chainhash.Hash, error) {
+
+	return c.SendManyV2ChangeAddrAsync(fromAccount, amounts, changeAddr).Receive()
+}
+
+// SendManyMinConfAsync returns an instance of a type that can be used to get
+// the result of the RPC at some future time by invoking the Receive function on
+// the returned instance.
+//
+// See SendManyMinConf for the blocking version and more details.
+func (c *Client) SendManyV2MinConfAsync(fromAccount string,
+	amounts map[hcutil.Address]hcutil.Amount,changeAddr string,
+	minConfirms int) FutureSendManyResult {
+
+	convertedAmounts := make(map[string]float64, len(amounts))
+	for addr, amount := range amounts {
+		convertedAmounts[addr.EncodeAddress()] = amount.ToCoin()
+	}
+	cmd := hcjson.NewSendManyV2Cmd(fromAccount, convertedAmounts,
+		&changeAddr, &minConfirms)
+	return c.sendCmd(cmd)
+}
+
+// SendManyMinConf sends multiple amounts to multiple addresses using the
+// provided account as a source of funds in a single transaction.  Only funds
+// with the passed number of minimum confirmations will be used.
+//
+// See SendMany to use the default number of minimum confirmations and
+// SendManyComment for additional options.
+//
+// NOTE: This function requires to the wallet to be unlocked.  See the
+// WalletPassphrase function for more details.
+func (c *Client) SendManyV2MinConf(fromAccount string,
+	amounts map[hcutil.Address]hcutil.Amount, changeAddr string,
+	minConfirms int) (*chainhash.Hash, error) {
+
+	return c.SendManyV2MinConfAsync(fromAccount, amounts,changeAddr, minConfirms).Receive()
+}
+
 // Begin hcd FUNCTIONS ---------------------------------------------------------
 //
 // SStx generation RPC call handling

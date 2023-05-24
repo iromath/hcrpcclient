@@ -10,10 +10,10 @@ import (
 	"encoding/hex"
 	"encoding/json"
 
-	"github.com/HcashOrg/hcd/chaincfg/chainhash"
-	"github.com/HcashOrg/hcd/hcjson"
-	"github.com/HcashOrg/hcd/wire"
-	"github.com/HcashOrg/hcd/hcutil"
+	"github.com/james-ray/hcd/chaincfg/chainhash"
+	"github.com/james-ray/hcd/hcjson"
+	"github.com/james-ray/hcd/hcutil"
+	"github.com/james-ray/hcd/wire"
 )
 
 // *****************************
@@ -786,7 +786,7 @@ func (c *Client) SendManyV2ChangeAddr(fromAccount string,
 //
 // See SendManyMinConf for the blocking version and more details.
 func (c *Client) SendManyV2MinConfAsync(fromAccount string,
-	amounts map[hcutil.Address]hcutil.Amount,changeAddr string,
+	amounts map[hcutil.Address]hcutil.Amount, changeAddr string,
 	minConfirms int) FutureSendManyResult {
 
 	convertedAmounts := make(map[string]float64, len(amounts))
@@ -811,7 +811,7 @@ func (c *Client) SendManyV2MinConf(fromAccount string,
 	amounts map[hcutil.Address]hcutil.Amount, changeAddr string,
 	minConfirms int) (*chainhash.Hash, error) {
 
-	return c.SendManyV2MinConfAsync(fromAccount, amounts,changeAddr, minConfirms).Receive()
+	return c.SendManyV2MinConfAsync(fromAccount, amounts, changeAddr, minConfirms).Receive()
 }
 
 // Begin hcd FUNCTIONS ---------------------------------------------------------

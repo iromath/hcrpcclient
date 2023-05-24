@@ -12,8 +12,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/HcashOrg/hcd/hcutil"
-	hcrpcclient "github.com/HcashOrg/hcrpcclient"
+	"github.com/james-ray/hcd/hcutil"
+	hcrpcclient "github.com/james-ray/hcrpcclient"
 )
 
 func main() {

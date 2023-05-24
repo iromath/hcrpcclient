@@ -15,7 +15,7 @@ The first step is to use `go get` to download and install the hcrpcclient
 package:
 
 ```bash
-$ go get github.com/HcashOrg/hcrpcclient
+$ go get github.com/james-ray/hcrpcclient
 ```
 
 Next, modify the `main.go` source to specify the correct RPC username and

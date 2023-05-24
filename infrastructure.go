@@ -25,7 +25,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/HcashOrg/hcd/hcjson"
+	"github.com/james-ray/hcd/hcjson"
 
 	"github.com/btcsuite/go-socks/socks"
 	"github.com/btcsuite/websocket"
@@ -286,7 +286,7 @@ type (
 	// rawResponse is a partially-unmarshaled JSON-RPC response.  For this
 	// to be valid (according to JSON-RPC 1.0 spec), ID may not be nil.
 	rawResponse struct {
-		Result json.RawMessage   `json:"result"`
+		Result json.RawMessage  `json:"result"`
 		Error  *hcjson.RPCError `json:"error"`
 	}
 )

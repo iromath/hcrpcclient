@@ -10,7 +10,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/HcashOrg/hcd/hcjson"
+	"github.com/james-ray/hcd/hcjson"
 )
 
 // FutureRawResult is a future promise to deliver the result of a RawRequest RPC

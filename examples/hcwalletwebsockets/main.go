@@ -12,9 +12,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/HcashOrg/hcd/hcutil"
-	hcrpcclient "github.com/HcashOrg/hcrpcclient"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/james-ray/hcd/hcutil"
+	hcrpcclient "github.com/james-ray/hcrpcclient"
 )
 
 func main() {
@@ -59,18 +59,16 @@ func main() {
 	}
 
 	mp := make(map[hcutil.Address]hcutil.Amount)
-	addr1,_ := hcutil.DecodeAddress("TsRj7wFGcFrpWhWztm4kdG5g1WZWonoFtXm")
-	mp[addr1] = hcutil.Amount(200000000)//2 HCD
+	addr1, _ := hcutil.DecodeAddress("TsRj7wFGcFrpWhWztm4kdG5g1WZWonoFtXm")
+	mp[addr1] = hcutil.Amount(200000000) //2 HCD
 
+	mp[addr1] = hcutil.Amount(200000000) //2 HCD
+	hash, err := client.SendManyV2("default", mp)
+	log.Println("hash:", hash, err)
 
-	mp[addr1] = hcutil.Amount(200000000)//2 HCD
-	hash, err := client.SendManyV2("default",mp)
-	log.Println("hash:",hash,err)
+	hash, err = client.SendManyV2ChangeAddr("default", mp, "TbMpHSpnkw2CVi6cbTLcMYydeGn3LnoZG8q")
+	log.Println("hash:", hash, err)
 
-	hash, err = client.SendManyV2ChangeAddr("default",mp,"TbMpHSpnkw2CVi6cbTLcMYydeGn3LnoZG8q")
-	log.Println("hash:",hash,err)
-
-	
 	// For this example gracefully shutdown the client after 10 seconds.
 	// Ordinarily when to shutdown the client is highly application
 	// specific.

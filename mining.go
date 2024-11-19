@@ -11,9 +11,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/james-ray/hcd/chaincfg/chainhash"
-	"github.com/james-ray/hcd/hcjson"
-	"github.com/james-ray/hcd/hcutil"
+	"github.com/iromath/hcd/chaincfg/chainhash"
+	"github.com/iromath/hcd/hcjson"
+	"github.com/iromath/hcd/hcutil"
 )
 
 // FutureGenerateResult is a future promise to deliver the result of a

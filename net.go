@@ -9,7 +9,7 @@ package hcrpcclient
 import (
 	"encoding/json"
 
-	"github.com/james-ray/hcd/hcjson"
+	"github.com/iromath/hcd/hcjson"
 )
 
 // AddNodeCommand enumerates the available commands that the AddNode function
